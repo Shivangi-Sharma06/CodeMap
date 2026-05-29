@@ -4,10 +4,16 @@ import { ApiError, type AnalysisResult, type RepoData } from '../types/index.js'
 const SYSTEM_PROMPT =
   'You are a senior software engineer and technical writer. Analyze a GitHub repository and produce a structured onboarding document for a new engineer joining the team. Be specific and grounded in the actual code - not generic advice. Your entire response must be a single valid JSON object. No markdown, no code fences, no explanation, no preamble. Only the JSON object.';
 
-const groq = new OpenAI({
-  apiKey: process.env.GROQ_API_KEY,
-  baseURL: 'https://api.groq.com/openai/v1',
-});
+function getGroqClient() {
+  if (!process.env.GROQ_API_KEY) {
+    throw new ApiError('Missing GROQ_API_KEY', 'AI_FAILED', 500);
+  }
+
+  return new OpenAI({
+    apiKey: process.env.GROQ_API_KEY,
+    baseURL: 'https://api.groq.com/openai/v1',
+  });
+}
 
 function cleanJson(text: string): string {
   return text
@@ -75,6 +81,7 @@ ${retryInstruction}`;
 }
 
 async function requestAnalysis(data: RepoData, retry = false): Promise<string> {
+  const groq = getGroqClient();
   const response = await groq.chat.completions.create({
     model: 'llama-3.3-70b-versatile',
     max_tokens: 4096,
@@ -88,10 +95,6 @@ async function requestAnalysis(data: RepoData, retry = false): Promise<string> {
 }
 
 export async function analyzeRepository(data: RepoData): Promise<AnalysisResult> {
-  if (!process.env.GROQ_API_KEY) {
-    throw new ApiError('Missing GROQ_API_KEY', 'AI_FAILED', 500);
-  }
-
   const firstResponse = await requestAnalysis(data);
 
   try {
