@@ -16,14 +16,17 @@ export default async function LoginPage() {
   }
 
   return (
-    <Stack mih="100vh" align="center" justify="center" bg="dark.9" px="lg">
-      <Card w="100%" maw={420} p="xl">
-        <Stack gap="lg">
-          <Stack gap={4}>
-            <Title order={1} ff="monospace" size="h2">
+    <Stack mih="100vh" align="center" justify="center" px="lg" className="app-canvas">
+      <Card w="100%" maw={520} p="xl" className="app-panel">
+        <Stack gap="xl">
+          <Stack gap={8}>
+            <Text className="app-kicker">Authentication</Text>
+            <Title order={1} ff="monospace" size="h2" className="app-heading">
               CodeMap
             </Title>
-            <Text c="dark.1">Day-1 codebase guides from public GitHub repositories.</Text>
+            <Text c="dark.1" maw={380}>
+              Day-1 codebase guides from public GitHub repositories.
+            </Text>
           </Stack>
           <form action={signInWithGitHub}>
             <Button type="submit" fullWidth leftSection={<Github size={18} />}>

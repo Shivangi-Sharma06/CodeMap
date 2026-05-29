@@ -12,7 +12,7 @@ type AnalyzeProgressProps = {
 
 function StepIcon({ step }: { step: StatusStep }) {
   if (step.status === 'COMPLETED' || step.status === 'NOT_FOUND') {
-    return <CheckCircle2 size={18} color="#aaaaaa" />;
+    return <CheckCircle2 size={18} color="#f5f5f5" />;
   }
 
   if (step.status === 'STARTED') {
@@ -20,10 +20,10 @@ function StepIcon({ step }: { step: StatusStep }) {
   }
 
   if (step.status === 'FAILED') {
-    return <Circle size={18} color="#aaaaaa" />;
+    return <Circle size={18} color="#f5f5f5" />;
   }
 
-  return <Circle size={18} color="#444444" />;
+  return <Circle size={18} color="#3d3d3d" />;
 }
 
 function displayStatus(status: string) {
@@ -35,16 +35,18 @@ function displayStatus(status: string) {
 export function AnalyzeProgress({ status, onRetry }: AnalyzeProgressProps) {
   if (!status) {
     return (
-      <Group gap="sm">
+      <Group gap="sm" className="app-panel" p="md">
         <Loader size="sm" color="gray" />
-        <Text>Starting analysis</Text>
+        <Text ff="monospace" tt="uppercase" size="sm" c="dark.1">
+          Starting analysis
+        </Text>
       </Group>
     );
   }
 
   if (status.status === 'FAILED') {
     return (
-      <Stack maw={720} gap="md">
+      <Stack maw={760} gap="md" className="report-intro">
         {status.steps.map((step) => (
           <Group key={step.step} wrap="nowrap" align="center">
             <StepIcon step={step} />
@@ -68,7 +70,7 @@ export function AnalyzeProgress({ status, onRetry }: AnalyzeProgressProps) {
   }
 
   return (
-    <Stack maw={760} gap="md">
+    <Stack maw={760} gap="md" className="report-intro">
       {status.steps.map((step) => (
         <Group key={step.step} wrap="nowrap" align="center">
           <StepIcon step={step} />

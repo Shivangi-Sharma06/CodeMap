@@ -78,166 +78,189 @@ export function ReportView({ report, publicView = false, onShare, onDelete }: Re
           )}
 
           <section id="overview" className="report-section">
-            <Group justify="space-between" align="flex-start" gap="md">
-              <Stack gap="sm">
-                <Group gap="xs" align="center">
-                  <Title order={1} ff="monospace" style={{ overflowWrap: 'anywhere' }}>
-                    {report.repoFullName}
-                  </Title>
-                  <Anchor href={report.repoUrl} target="_blank" aria-label="Open repository">
-                    <ExternalLink size={18} />
-                  </Anchor>
+            <Box className="report-surface">
+              <Stack gap="lg">
+                <Group justify="space-between" align="flex-start" gap="md">
+                  <Stack gap="sm">
+                    <Text className="report-label">Overview</Text>
+                    <Group gap="xs" align="center">
+                      <Title order={1} ff="monospace" className="app-heading" style={{ overflowWrap: 'anywhere' }}>
+                        {report.repoFullName}
+                      </Title>
+                      <Anchor href={report.repoUrl} target="_blank" aria-label="Open repository">
+                        <ExternalLink size={18} />
+                      </Anchor>
+                    </Group>
+                  </Stack>
+                  <Group gap="xs" align="flex-start" wrap="wrap" justify="flex-end">
+                    <Badge className="app-chip">{report.repoStars} stars</Badge>
+                    <Badge className="app-chip">{report.repoLanguage ?? 'Unknown'}</Badge>
+                    {report.repoTopics.slice(0, 6).map((topic) => (
+                      <Badge key={topic} className="app-chip">
+                        {topic}
+                      </Badge>
+                    ))}
+                  </Group>
                 </Group>
-                <Group gap="xs">
-                  <Badge>{report.repoStars} stars</Badge>
-                  <Badge>{report.repoLanguage ?? 'Unknown'}</Badge>
-                  {report.repoTopics.slice(0, 6).map((topic) => (
-                    <Badge key={topic}>{topic}</Badge>
-                  ))}
-                </Group>
+                <Text size="lg" c="dark.0" lh={1.75} maw={920}>
+                  {result.summary}
+                </Text>
               </Stack>
-            </Group>
-            <Text mt="xl" size="lg" c="dark.0">
-              {result.summary}
-            </Text>
+            </Box>
           </section>
 
           <section id="tech-stack" className="report-section">
-            <Title order={2} mb="md">
-              Tech Stack
-            </Title>
-            <Group gap="xs">
-              {result.techStack.map((item) => (
-                <Badge key={item} ff="monospace">
-                  {item}
-                </Badge>
-              ))}
-            </Group>
+            <Box className="report-section-panel">
+              <Title order={2} mb="md" className="app-heading" size="h3">
+                Tech Stack
+              </Title>
+              <Group gap="xs">
+                {result.techStack.map((item) => (
+                  <Badge key={item} ff="monospace" className="app-chip">
+                    {item}
+                  </Badge>
+                ))}
+              </Group>
+            </Box>
           </section>
 
           <section id="architecture" className="report-section">
-            <Title order={2} mb="md">
-              Architecture
-            </Title>
-            <Text c="dark.0" lh={1.7}>
-              {result.architecture}
-            </Text>
+            <Box className="report-section-panel">
+              <Title order={2} mb="md" className="app-heading" size="h3">
+                Architecture
+              </Title>
+              <Text c="dark.0" lh={1.7}>
+                {result.architecture}
+              </Text>
+            </Box>
           </section>
 
           <section id="start-here" className="report-section">
-            <Title order={2} mb="lg">
-              Start Here
-            </Title>
-            <Stack gap="md">
-              {result.startHere.map((item, index) => (
-                <Box key={`${item.file}-${index}`}>
-                  <Group align="flex-start" gap="md" wrap="nowrap">
-                    <Text ff="monospace" c="dark.2" w={28}>
-                      {index + 1}.
-                    </Text>
-                    <Box>
-                      <Text ff="monospace" fw={600}>
-                        {item.file}
+            <Box className="report-section-panel">
+              <Title order={2} mb="lg" className="app-heading" size="h3">
+                Start Here
+              </Title>
+              <Stack gap="md">
+                {result.startHere.map((item, index) => (
+                  <Box key={`${item.file}-${index}`}>
+                    <Group align="flex-start" gap="md" wrap="nowrap">
+                      <Text ff="monospace" c="dark.2" w={28}>
+                        {index + 1}.
                       </Text>
-                      <Text c="dark.1" mt={4}>
-                        {item.reason}
-                      </Text>
-                    </Box>
-                  </Group>
-                  {index < result.startHere.length - 1 && <Divider mt="md" />}
-                </Box>
-              ))}
-            </Stack>
+                      <Box>
+                        <Text ff="monospace" fw={600}>
+                          {item.file}
+                        </Text>
+                        <Text c="dark.1" mt={4}>
+                          {item.reason}
+                        </Text>
+                      </Box>
+                    </Group>
+                    {index < result.startHere.length - 1 && <Divider mt="md" color="dark.5" />}
+                  </Box>
+                ))}
+              </Stack>
+            </Box>
           </section>
 
           <section id="glossary" className="report-section">
-            <Title order={2} mb="md">
-              Glossary
-            </Title>
-            <Table striped withTableBorder>
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th>Term</Table.Th>
-                  <Table.Th>Definition</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {result.keyConceptsGlossary.map((item) => (
-                  <Table.Tr key={item.term}>
-                    <Table.Td>
-                      <Text ff="monospace">{item.term}</Text>
-                    </Table.Td>
-                    <Table.Td>{item.definition}</Table.Td>
+            <Box className="report-section-panel">
+              <Title order={2} mb="md" className="app-heading" size="h3">
+                Glossary
+              </Title>
+              <Table striped withTableBorder className="app-table">
+                <Table.Thead>
+                  <Table.Tr>
+                    <Table.Th>Term</Table.Th>
+                    <Table.Th>Definition</Table.Th>
                   </Table.Tr>
-                ))}
-              </Table.Tbody>
-            </Table>
+                </Table.Thead>
+                <Table.Tbody>
+                  {result.keyConceptsGlossary.map((item) => (
+                    <Table.Tr key={item.term}>
+                      <Table.Td>
+                        <Text ff="monospace">{item.term}</Text>
+                      </Table.Td>
+                      <Table.Td>{item.definition}</Table.Td>
+                    </Table.Tr>
+                  ))}
+                </Table.Tbody>
+              </Table>
+            </Box>
           </section>
 
           <section id="setup-guide" className="report-section">
-            <Title order={2} mb="md">
-              Setup Guide
-            </Title>
-            <Stack component="ol" gap="sm" pl="lg">
-              {result.setupSteps.map((step) => (
-                <Text component="li" key={step}>
-                  {step}
-                </Text>
-              ))}
-            </Stack>
+            <Box className="report-section-panel">
+              <Title order={2} mb="md" className="app-heading" size="h3">
+                Setup Guide
+              </Title>
+              <Stack component="ol" gap="sm" pl="lg">
+                {result.setupSteps.map((step) => (
+                  <Text component="li" key={step}>
+                    {step}
+                  </Text>
+                ))}
+              </Stack>
+            </Box>
           </section>
 
           <section id="first-week-tasks" className="report-section">
-            <Title order={2} mb="md">
-              First Week Tasks
-            </Title>
-            <Stack component="ol" gap="sm" pl="lg">
-              {result.firstWeekTasks.map((task) => (
-                <Text component="li" key={task}>
-                  {task}
-                </Text>
-              ))}
-            </Stack>
+            <Box className="report-section-panel">
+              <Title order={2} mb="md" className="app-heading" size="h3">
+                First Week Tasks
+              </Title>
+              <Stack component="ol" gap="sm" pl="lg">
+                {result.firstWeekTasks.map((task) => (
+                  <Text component="li" key={task}>
+                    {task}
+                  </Text>
+                ))}
+              </Stack>
+            </Box>
           </section>
 
           {(result.warnings?.length ?? 0) > 0 && (
             <section id="warnings" className="report-section">
-              <Title order={2} mb="md">
-                Warnings
-              </Title>
-              <Stack gap="sm">
-                {result.warnings?.map((warning) => (
-                  <Group key={warning} align="flex-start" gap="sm" wrap="nowrap">
-                    <AlertTriangle size={17} color="#888888" />
-                    <Text c="dark.1">{warning}</Text>
-                  </Group>
-                ))}
-              </Stack>
+              <Box className="report-section-panel">
+                <Title order={2} mb="md" className="app-heading" size="h3">
+                  Warnings
+                </Title>
+                <Stack gap="sm">
+                  {result.warnings?.map((warning) => (
+                    <Group key={warning} align="flex-start" gap="sm" wrap="nowrap">
+                      <AlertTriangle size={17} color="#bdbdbd" />
+                      <Text c="dark.1">{warning}</Text>
+                    </Group>
+                  ))}
+                </Stack>
+              </Box>
             </section>
           )}
 
           <section id="repo-health" className="report-section">
-            <Title order={2} mb="md">
-              Repo Health
-            </Title>
-            <SimpleGrid cols={{ base: 2, sm: 3, md: 5 }} spacing="xs">
-              {[
-                ['Tests', result.repoHealth.hasTests],
-                ['CI/CD', result.repoHealth.hasCI],
-                ['Docs', result.repoHealth.hasDocumentation],
-                ['Lock file', result.repoHealth.hasDependencyLock],
-                ['License', result.repoHealth.hasLicense],
-              ].map(([label, value]) => (
-                <Box key={String(label)} p="md" bg="dark.7" style={{ border: '1px solid #1f1f1f' }}>
-                  <Text size="sm" c="dark.1">
-                    {label}
-                  </Text>
-                  <Text ff="monospace" mt={4}>
-                    {value ? 'Yes' : 'No'}
-                  </Text>
-                </Box>
-              ))}
-            </SimpleGrid>
+            <Box className="report-section-panel">
+              <Title order={2} mb="md" className="app-heading" size="h3">
+                Repo Health
+              </Title>
+              <SimpleGrid cols={{ base: 2, sm: 3, md: 5 }} spacing="xs">
+                {[
+                  ['Tests', result.repoHealth.hasTests],
+                  ['CI/CD', result.repoHealth.hasCI],
+                  ['Docs', result.repoHealth.hasDocumentation],
+                  ['Lock file', result.repoHealth.hasDependencyLock],
+                  ['License', result.repoHealth.hasLicense],
+                ].map(([label, value]) => (
+                  <Box key={String(label)} className="report-metric">
+                    <Text size="sm" c="dark.1">
+                      {label}
+                    </Text>
+                    <Text ff="monospace" mt={4}>
+                      {value ? 'Yes' : 'No'}
+                    </Text>
+                  </Box>
+                ))}
+              </SimpleGrid>
+            </Box>
           </section>
         </Stack>
       </Box>

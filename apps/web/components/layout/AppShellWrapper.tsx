@@ -1,6 +1,6 @@
 'use client';
 
-import { AppShell, Burger, Group, ScrollArea } from '@mantine/core';
+import { AppShell, Box, Burger, Group, ScrollArea } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Sidebar } from './Sidebar';
 
@@ -18,25 +18,28 @@ export function AppShellWrapper({ children, user }: AppShellWrapperProps) {
 
   return (
     <AppShell
-      header={{ height: 56 }}
+      header={{ height: 72 }}
       navbar={{
-        width: 220,
+        width: 288,
         breakpoint: 'sm',
         collapsed: { mobile: !opened },
       }}
       padding="xl"
       bg="dark.9"
     >
-      <AppShell.Header bg="dark.8" hiddenFrom="sm">
-        <Group h="100%" px="md">
+      <AppShell.Header className="app-sidebar" hiddenFrom="sm">
+        <Group h="100%" px="md" justify="space-between">
+          <Group gap="xs">
+            <Box className="app-brand-mark">Codemap</Box>
+          </Group>
           <Burger opened={opened} onClick={toggle} size="sm" aria-label="Toggle navigation" />
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar bg="dark.8" p="md">
+      <AppShell.Navbar className="app-sidebar" p="xl">
         <Sidebar user={user} />
       </AppShell.Navbar>
-      <AppShell.Main>
-        <ScrollArea.Autosize mah="calc(100vh - 48px)" type="never">
+      <AppShell.Main bg="dark.9">
+        <ScrollArea.Autosize mah="calc(100vh - 72px)" type="never">
           {children}
         </ScrollArea.Autosize>
       </AppShell.Main>

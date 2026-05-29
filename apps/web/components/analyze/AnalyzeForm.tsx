@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Stack, Text, TextInput } from '@mantine/core';
+import { Button, Stack, Text, TextInput, Title } from '@mantine/core';
 import { GitBranch } from 'lucide-react';
 import { useState } from 'react';
 import { isValidGitHubRepoUrl } from '@/lib/utils';
@@ -28,7 +28,17 @@ export function AnalyzeForm({ onSubmit, loading }: AnalyzeFormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack maw={680} gap="md">
+      <Stack maw={760} gap="md" className="report-intro">
+        <Stack gap={4}>
+          <Text className="app-kicker">Step 1</Text>
+          <Title order={2} ff="monospace" className="app-heading" size="h3">
+            Repository Input
+          </Title>
+          <Text c="dark.2">
+            Paste a public GitHub repo URL and generate an onboarding map with architecture, setup, and first-week
+            guidance.
+          </Text>
+        </Stack>
         <TextInput
           label="Repository URL"
           placeholder="https://github.com/owner/repository"

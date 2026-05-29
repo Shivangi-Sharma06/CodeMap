@@ -20,17 +20,23 @@ export function Sidebar({ user }: SidebarProps) {
   return (
     <Stack h="100%" justify="space-between" gap="xl">
       <Stack gap="xl">
-        <Text ff="monospace" fw={700} size="sm" c="dark.0" style={{ letterSpacing: 2 }}>
-          CODEMAP
-        </Text>
-        <Stack gap={4}>
+        <Stack gap={8}>
+          <Text className="app-kicker">Mission Control</Text>
+          <Text ff="monospace" fw={700} size="xl" c="dark.0" style={{ letterSpacing: 3 }}>
+            CODEMAP
+          </Text>
+          <Text size="sm" c="dark.2" lh={1.6}>
+            Explore, analyze, and share onboarding maps for public repositories.
+          </Text>
+        </Stack>
+        <Stack gap={6}>
           <NavLink
             component={Link}
             href="/dashboard"
             label="Dashboard"
             leftSection={<TableProperties size={16} />}
             active={pathname === '/dashboard'}
-            color="gray"
+            className="app-chip"
           />
           <NavLink
             component={Link}
@@ -38,14 +44,15 @@ export function Sidebar({ user }: SidebarProps) {
             label="New Analysis"
             leftSection={<Plus size={16} />}
             active={pathname === '/analyze'}
-            color="gray"
+            className="app-chip"
           />
         </Stack>
       </Stack>
 
       <Stack gap="sm">
-        <Box p="sm" bg="dark.7" style={{ border: '1px solid #1f1f1f' }}>
-          <Group gap="xs" wrap="nowrap" align="flex-start">
+        <Box p="md" className="app-panel">
+          <Stack gap="md">
+            <Group gap="sm" wrap="nowrap" align="flex-start">
             <Avatar src={user.image} size={34} radius="xl">
               <FileText size={15} />
             </Avatar>
@@ -57,14 +64,15 @@ export function Sidebar({ user }: SidebarProps) {
                 {user.email ?? 'Signed in with GitHub'}
               </Text>
             </Box>
-          </Group>
-          <Divider my="sm" />
-          <Group gap="xs" wrap="nowrap" align="flex-start">
-            <GitBranch size={14} color="#888888" />
-            <Text size="xs" c="dark.2" lh={1.45}>
-              Reports use your GitHub session token for higher public API limits.
-            </Text>
-          </Group>
+            </Group>
+            <Divider color="dark.5" />
+            <Group gap="xs" wrap="nowrap" align="flex-start">
+              <GitBranch size={14} color="#bdbdbd" />
+              <Text size="xs" c="dark.2" lh={1.45}>
+                Reports use your GitHub session token for higher public API limits.
+              </Text>
+            </Group>
+          </Stack>
         </Box>
         <Group justify="space-between" wrap="nowrap">
           <Text size="xs" c="dark.2">
@@ -73,7 +81,7 @@ export function Sidebar({ user }: SidebarProps) {
           <Tooltip label="Log out">
             <ActionIcon
               onClick={() => void signOut({ callbackUrl: '/login' })}
-              variant="subtle"
+              variant="outline"
               color="gray"
               aria-label="Log out"
             >

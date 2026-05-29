@@ -3,6 +3,7 @@
 import {
   Alert,
   Box,
+  Badge,
   Button,
   Group,
   Modal,
@@ -78,17 +79,26 @@ export default function DashboardPage() {
 
   return (
     <Stack gap="xl">
-      <Stack gap="xs">
-        <Group justify="space-between" align="flex-start">
+      <Stack gap="md" className="report-intro">
+        <Group justify="space-between" align="flex-start" gap="lg">
           <Box>
-            <Title order={1}>Your Reports</Title>
-            <Text c="dark.1" mt={6}>
+            <Text className="app-kicker">Dashboard</Text>
+            <Title order={1} className="app-heading">
+              Your Reports
+            </Title>
+            <Text c="dark.1" mt={6} maw={680}>
               Track generated onboarding guides, public links, and in-flight repository analyses.
             </Text>
           </Box>
           <Button component={Link} href="/analyze" leftSection={<Plus size={16} />}>
             New Analysis
           </Button>
+        </Group>
+        <Group gap="sm" wrap="wrap">
+          <Badge className="app-chip">{reports.length} total</Badge>
+          <Badge className="app-chip">{completedCount} completed</Badge>
+          <Badge className="app-chip">{processingCount} processing</Badge>
+          <Badge className="app-chip">{publicCount} public</Badge>
         </Group>
       </Stack>
 
@@ -99,7 +109,7 @@ export default function DashboardPage() {
           ['Processing', processingCount],
           ['Public links', publicCount],
         ].map(([label, value]) => (
-          <Box key={label} p="md" bg="dark.7" style={{ border: '1px solid #1f1f1f' }}>
+          <Box key={label} className="app-stat" p="md">
             <Text size="sm" c="dark.1">
               {label}
             </Text>
@@ -126,7 +136,7 @@ export default function DashboardPage() {
       )}
 
       {reports.length > 0 && (
-        <Table highlightOnHover withTableBorder verticalSpacing="md">
+        <Table highlightOnHover withTableBorder verticalSpacing="md" className="app-table">
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Repository</Table.Th>

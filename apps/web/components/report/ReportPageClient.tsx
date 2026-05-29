@@ -93,10 +93,10 @@ export function ReportPageClient({ id }: ReportPageClientProps) {
 
   if (report.status !== 'COMPLETED') {
     return (
-      <Stack>
+      <Stack className="report-intro">
         <Group gap="sm">
           {report.status === 'PROCESSING' && <Loader size="sm" color="gray" />}
-          <Text ff="monospace" fw={600}>
+          <Text ff="monospace" fw={600} tt="uppercase">
             {report.repoFullName}
           </Text>
         </Group>

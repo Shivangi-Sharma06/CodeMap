@@ -1,6 +1,6 @@
 'use client';
 
-import { Alert, Stack, Title } from '@mantine/core';
+import { Alert, Stack, Text, Title } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -70,7 +70,15 @@ export default function AnalyzePage() {
 
   return (
     <Stack gap="xl">
-      <Title order={1}>New Analysis</Title>
+      <Stack gap="md" className="report-intro">
+        <Text className="app-kicker">Analysis</Text>
+        <Title order={1} className="app-heading">
+          New Analysis
+        </Title>
+        <Text c="dark.1" maw={720}>
+          Generate a repository map from a public GitHub URL, then follow the live status as the report is built.
+        </Text>
+      </Stack>
       {error && (
         <Alert color="gray" title="Could not start analysis">
           {error}
@@ -80,7 +88,7 @@ export default function AnalyzePage() {
         <AnalyzeForm onSubmit={startAnalysis} loading={submitting} />
       ) : (
         <Stack gap="lg">
-          <Title order={2} ff="monospace" size="h3">
+          <Title order={2} ff="monospace" size="h3" className="app-heading">
             {repoUrl}
           </Title>
           <AnalyzeProgress status={status} onRetry={retry} />

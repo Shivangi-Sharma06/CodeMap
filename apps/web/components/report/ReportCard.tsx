@@ -19,7 +19,9 @@ export function ReportRow({ report, onShare, onDelete }: ReportCardProps) {
         </Text>
       </Table.Td>
       <Table.Td>
-        <Text size="sm">{report.status}</Text>
+        <Text size="sm" ff="monospace" tt="uppercase">
+          {report.status}
+        </Text>
       </Table.Td>
       <Table.Td>
         <Text size="sm" c="dark.1">
@@ -32,7 +34,7 @@ export function ReportRow({ report, onShare, onDelete }: ReportCardProps) {
         </Text>
       </Table.Td>
       <Table.Td>
-        <Group gap={4}>
+        <Group gap={4} wrap="nowrap">
           <Tooltip label="View report">
             <ActionIcon component={Link} href={`/report/${report.id}`} variant="subtle" color="gray" aria-label="View">
               <ChevronRight size={16} />
