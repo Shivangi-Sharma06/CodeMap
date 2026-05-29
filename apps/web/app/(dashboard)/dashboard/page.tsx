@@ -2,9 +2,11 @@
 
 import {
   Alert,
+  Box,
   Button,
   Group,
   Modal,
+  SimpleGrid,
   Stack,
   Table,
   Text,
@@ -70,14 +72,43 @@ export default function DashboardPage() {
     close();
   }
 
+  const completedCount = reports.filter((report) => report.status === 'COMPLETED').length;
+  const processingCount = reports.filter((report) => report.status === 'PROCESSING' || report.status === 'PENDING').length;
+  const publicCount = reports.filter((report) => report.isPublic).length;
+
   return (
     <Stack gap="xl">
-      <Group justify="space-between">
-        <Title order={1}>Your Reports</Title>
-        <Button component={Link} href="/analyze" leftSection={<Plus size={16} />}>
-          New Analysis
-        </Button>
-      </Group>
+      <Stack gap="xs">
+        <Group justify="space-between" align="flex-start">
+          <Box>
+            <Title order={1}>Your Reports</Title>
+            <Text c="dark.1" mt={6}>
+              Track generated onboarding guides, public links, and in-flight repository analyses.
+            </Text>
+          </Box>
+          <Button component={Link} href="/analyze" leftSection={<Plus size={16} />}>
+            New Analysis
+          </Button>
+        </Group>
+      </Stack>
+
+      <SimpleGrid cols={{ base: 2, sm: 4 }} spacing="xs">
+        {[
+          ['Total reports', reports.length],
+          ['Completed', completedCount],
+          ['Processing', processingCount],
+          ['Public links', publicCount],
+        ].map(([label, value]) => (
+          <Box key={label} p="md" bg="dark.7" style={{ border: '1px solid #1f1f1f' }}>
+            <Text size="sm" c="dark.1">
+              {label}
+            </Text>
+            <Text ff="monospace" size="xl" fw={600} mt={4}>
+              {loading ? '-' : value}
+            </Text>
+          </Box>
+        ))}
+      </SimpleGrid>
 
       {error && (
         <Alert color="gray" title="Could not load reports">

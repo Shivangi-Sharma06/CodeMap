@@ -1,7 +1,7 @@
 'use client';
 
-import { ActionIcon, Avatar, Box, Group, NavLink, Stack, Text, Tooltip } from '@mantine/core';
-import { FileText, LogOut, Plus, TableProperties } from 'lucide-react';
+import { ActionIcon, Avatar, Box, Divider, Group, NavLink, Stack, Text, Tooltip } from '@mantine/core';
+import { FileText, GitBranch, LogOut, Plus, TableProperties } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -43,31 +43,45 @@ export function Sidebar({ user }: SidebarProps) {
         </Stack>
       </Stack>
 
-      <Group justify="space-between" wrap="nowrap">
-        <Group gap="xs" wrap="nowrap" miw={0}>
-          <Avatar src={user.image} size={30} radius="xl">
-            <FileText size={14} />
-          </Avatar>
-          <Box miw={0}>
-            <Text size="sm" truncate>
-              {user.name ?? 'GitHub user'}
+      <Stack gap="sm">
+        <Box p="sm" bg="dark.7" style={{ border: '1px solid #1f1f1f' }}>
+          <Group gap="xs" wrap="nowrap" align="flex-start">
+            <Avatar src={user.image} size={34} radius="xl">
+              <FileText size={15} />
+            </Avatar>
+            <Box miw={0}>
+              <Text size="sm" fw={600} truncate>
+                {user.name ?? 'GitHub user'}
+              </Text>
+              <Text size="xs" c="dark.2" truncate>
+                {user.email ?? 'Signed in with GitHub'}
+              </Text>
+            </Box>
+          </Group>
+          <Divider my="sm" />
+          <Group gap="xs" wrap="nowrap" align="flex-start">
+            <GitBranch size={14} color="#888888" />
+            <Text size="xs" c="dark.2" lh={1.45}>
+              Reports use your GitHub session token for higher public API limits.
             </Text>
-            <Text size="xs" c="dark.2" truncate>
-              {user.email ?? 'Signed in'}
-            </Text>
-          </Box>
+          </Group>
+        </Box>
+        <Group justify="space-between" wrap="nowrap">
+          <Text size="xs" c="dark.2">
+            Account
+          </Text>
+          <Tooltip label="Log out">
+            <ActionIcon
+              onClick={() => void signOut({ callbackUrl: '/login' })}
+              variant="subtle"
+              color="gray"
+              aria-label="Log out"
+            >
+              <LogOut size={16} />
+            </ActionIcon>
+          </Tooltip>
         </Group>
-        <Tooltip label="Log out">
-          <ActionIcon
-            onClick={() => void signOut({ callbackUrl: '/login' })}
-            variant="subtle"
-            color="gray"
-            aria-label="Log out"
-          >
-            <LogOut size={16} />
-          </ActionIcon>
-        </Tooltip>
-      </Group>
+      </Stack>
     </Stack>
   );
 }

@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Card, Divider, Grid, Group, Stack, Text, Title } from '@mantine/core';
+import { Badge, Box, Button, Card, Divider, Grid, GridCol, Group, Stack, Text, Title } from '@mantine/core';
 import { Github } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { auth, signIn } from '@/lib/auth';
@@ -18,7 +18,7 @@ export default async function LandingPage() {
   return (
     <Box mih="100vh" bg="dark.9" px={{ base: 'lg', md: 64 }} py={{ base: 40, md: 72 }}>
       <Grid align="center" gutter={{ base: 48, md: 72 }} mih="calc(100vh - 144px)">
-        <Grid.Col span={{ base: 12, md: 6 }}>
+        <GridCol span={{ base: 12, md: 6 }}>
           <Stack gap="xl" maw={620}>
             <Text ff="monospace" c="dark.2" size="sm" style={{ letterSpacing: 3 }}>
               CODEMAP
@@ -36,9 +36,9 @@ export default async function LandingPage() {
             </form>
             <Text c="dark.2">No setup required · Works on any public repo · Shareable links</Text>
           </Stack>
-        </Grid.Col>
+        </GridCol>
 
-        <Grid.Col span={{ base: 12, md: 6 }}>
+        <GridCol span={{ base: 12, md: 6 }}>
           <Card p="xl" radius="sm" bg="dark.7">
             <Stack gap="lg">
               <Group justify="space-between">
@@ -75,7 +75,7 @@ export default async function LandingPage() {
               </Stack>
             </Stack>
           </Card>
-        </Grid.Col>
+        </GridCol>
       </Grid>
     </Box>
   );
